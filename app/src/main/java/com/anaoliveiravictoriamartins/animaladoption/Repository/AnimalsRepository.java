@@ -96,5 +96,4 @@ public class AnimalsRepository {
 
         return animals;
     }
-
 }

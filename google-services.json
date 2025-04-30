@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "721027092933",
+    "project_id": "fundacaoprin",
+    "storage_bucket": "fundacaoprin.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721027092933:android:c4727ce5abbb57137f7bac",
+        "android_client_info": {
+          "package_name": "com.anaoliveiravictoriamartins.animaladoption"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBShxiogDZF0Xp0yMu-QIs3MyB9n_sxfv8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

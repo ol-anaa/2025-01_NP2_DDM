@@ -1,5 +1,7 @@
 package com.anaoliveiravictoriamartins.animaladoption;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaoliveiravictoriamartins.animaladoption.Domain.Entity.Animal;
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -33,14 +34,19 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
     @Override
     public void onBindViewHolder(@NonNull AnimalViewHolder holder, int position) {
         Animal animal = animalList.get(position);
+        String Age = "";
+
+        if(animal.Age > 1)
+            Age = animal.Age + " anos";
+        else
+            Age = animal.Age + " ano";
 
         holder.animalName.setText(animal.Name);
-        holder.animalAge.setText(String.valueOf(animal.Age));
+        holder.animalAge.setText(Age);
         holder.animalRace.setText(animal.Race);
 
-        Glide.with(holder.itemView.getContext())
-                .load(animal.UrlImage)
-                .into(holder.animalImg);
+        Bitmap img = BitmapFactory.decodeFile(animal.UrlImage);
+        holder.animalImg.setImageBitmap(img);
     }
 
     @Override

@@ -21,8 +21,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FundacaoPrinDatabase extends SQLiteOpenHelper {
-
     private Context context;
+
     public FundacaoPrinDatabase(Context context){
         super(context, "FundacaoPrin", null, 1);
         this.context = context;
@@ -39,7 +39,8 @@ public class FundacaoPrinDatabase extends SQLiteOpenHelper {
                     "    [Age]         INTEGER      NOT NULL,\n" +
                     "    [Personality] VARCHAR(100) NOT NULL,\n" +
                     "    [UrlImage]    VARCHAR(250) NOT NULL,\n" +
-                    "    [Type]        VARCHAR(50)  NOT NULL\n" +
+                    "    [Type]        VARCHAR(50)  NOT NULL,\n" +
+                    "    [IsAdopted]   INTEGER      NOT NULL DEFAULT 0\n" +
                     ")"
         );
 
@@ -75,9 +76,9 @@ public class FundacaoPrinDatabase extends SQLiteOpenHelper {
         String pathLilica = saveBitmapToInternalStorage(lilicaImg, "lilica.png");
 
         List<Animal> defaultAnimals = Arrays.asList(
-                new Animal("Princesa", "Sem raça definida", 3, 10, "A princesa, carinhosamente conhecida como prin, é muito docil, carente, dorminhoca e sapeca", pathPrin, "Gato"),
-                new Animal("Samy Salame", "Sem raça definida", 8, 5, "Boba, carinhosa, ciúmenta, dócil", pathSamy, "Cachorro"),
-                new Animal("Lilica Repilica", "Sem raça definida", 9, 5, "Boba, carente, dengosa, brincalhona, desajeitada", pathLilica, "Cachorro")
+                new Animal("Princesa", "Sem raça definida", 3, 10, "A princesa, carinhosamente conhecida como prin, é muito docil, carente, dorminhoca e sapeca", pathPrin, "Gato", false),
+                new Animal("Samy Salame", "Sem raça definida", 8, 5, "Boba, carinhosa, ciúmenta, dócil", pathSamy, "Cachorro", false),
+                new Animal("Lilica Repilica", "Sem raça definida", 9, 5, "Boba, carente, dengosa, brincalhona, desajeitada", pathLilica, "Cachorro", false)
         );
 
         for (Animal animal : defaultAnimals) {
@@ -90,6 +91,7 @@ public class FundacaoPrinDatabase extends SQLiteOpenHelper {
             values.put("Personality", animal.Personality);
             values.put("UrlImage", animal.UrlImage);
             values.put("Type", animal.Type);
+            values.put("IsAdopted", animal.IsAdopted);
 
             db.insert("Animals", null, values);
         }

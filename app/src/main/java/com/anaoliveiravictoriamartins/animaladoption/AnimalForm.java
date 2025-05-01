@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class FormAnimal extends AppCompatActivity {
+public class AnimalForm extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.form_animal);
+        setContentView(R.layout.animal_form);
 
         initialCustomization();
     }

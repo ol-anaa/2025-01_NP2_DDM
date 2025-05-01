@@ -25,29 +25,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:hintTextColor="@color/white"
-        app:boxStrokeColor="@color/white"
-        app:endIconTint="@color/white"
         android:id="@+id/dropDown"
         app:boxCornerRadiusTopStart="12dp"
         app:boxCornerRadiusTopEnd="12dp"
         app:boxCornerRadiusBottomStart="12dp"
         app:boxCornerRadiusBottomEnd="12dp"
-        app:boxBackgroundColor="@android:color/transparent">
+        app:boxBackgroundColor="@android:color/transparent"
+        app:hintTextColor="@color/white"
+        app:endIconTint="@color/white"
+        >
 
         <AutoCompleteTextView
-            android:id="@+id/autoCompleteTextView"
+            android:id="@+id/filter"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:inputType="none"
             android:text="Choose Programming language"
-            android:textColor="@color/white"
-            />
-
+            android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <FrameLayout
@@ -71,12 +65,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="40dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginEnd="30dp"
             android:src="@drawable/add_icon"
-            android:scaleType="center"
-            android:tint="@color/white"
-            android:backgroundTint="@color/orange_medium"
-            android:elevation="15dp"
+            app:maxImageSize="28dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Fab"
+            app:backgroundTint="@color/orange_medium"
+            app:elevation="15dp"
+            android:contentDescription="Adicionar novo animal"
+            app:fabSize="normal"
+            app:fabCustomSize="60dp"
             />
     </FrameLayout>
 

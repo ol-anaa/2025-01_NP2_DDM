@@ -12,41 +12,47 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaoliveiravictoriamartins.animaladoption.Domain.Entity.Animal;
+import com.anaoliveiravictoriamartins.animaladoption.Repository.AnimalsRepository;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder> {
 
     private List<Animal> animalList;
+    private Consumer<Animal> onItemClick;
 
-    public AnimalAdapter(List<Animal> animalList) {
+
+    public AnimalAdapter(List<Animal> animalList, Consumer<Animal> onItemClick) {
         this.animalList = animalList;
+        this.onItemClick = onItemClick;
     }
 
     @NonNull
     @Override
     public AnimalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_animal, parent, false);
+                .inflate(R.layout.animal_item, parent, false);
         return new AnimalViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull AnimalViewHolder holder, int position) {
         Animal animal = animalList.get(position);
-        String Age = "";
-
-        if(animal.Age > 1)
-            Age = animal.Age + " anos";
-        else
-            Age = animal.Age + " ano";
 
         holder.animalName.setText(animal.Name);
-        holder.animalAge.setText(Age);
+        holder.animalAge.setText(animal.Age > 1 ? animal.Age + " anos" : animal.Age + " ano");
         holder.animalRace.setText(animal.Race);
 
         Bitmap img = BitmapFactory.decodeFile(animal.UrlImage);
         holder.animalImg.setImageBitmap(img);
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClick != null) {
+                onItemClick.accept(animal);
+            }
+        });
+
     }
 
     @Override

@@ -6,10 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.AutoCompleteTextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,58 +18,73 @@ import com.anaoliveiravictoriamartins.animaladoption.DatabaseManager.FundacaoPri
 import com.anaoliveiravictoriamartins.animaladoption.Domain.Entity.Animal;
 import com.anaoliveiravictoriamartins.animaladoption.Repository.AnimalsRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView recyclerViewAnimals;
-    private AnimalAdapter animalAdapter;
-    private LinearLayout linearLayout;
-    private SQLiteDatabase connection;
-    private FundacaoPrinDatabase fundacaoPrinDataBase;
     private AnimalsRepository repository;
     private FloatingActionButton fab;
+    private AutoCompleteTextView filter;
+    private TextInputLayout dropDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        linearLayout = findViewById(R.id.headerLayout);
-        recyclerViewAnimals = findViewById(R.id.recyclerViewAnimals);
         fab = findViewById(R.id.addAnimal);
+        filter = findViewById(R.id.filter);
+        dropDown = findViewById(R.id.dropDown);
+        dropDown.setBoxStrokeColor(ContextCompat.getColor(this, R.color.white));
 
         initialCustomization();
         createConnection();
-
-        List<Animal> animals = repository.getAll();
-        animalAdapter = new AnimalAdapter(animals);
-
-        recyclerViewAnimals.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewAnimals.setAdapter(animalAdapter);
+        loadAnimals("Todos");
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FormAnimal.class);
+                Intent intent = new Intent(MainActivity.this, AnimalForm.class);
                 startActivity(intent);
+            }
+        });
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadAnimals(v.toString());
             }
         });
     }
 
-    private void createConnection(){
+    private void createConnection() {
+
         try {
-            fundacaoPrinDataBase = new FundacaoPrinDatabase(this);
-            connection = fundacaoPrinDataBase.getWritableDatabase();
-            repository = new AnimalsRepository(connection);
+            repository = AnimalsRepository.getInstance(this);
         }
         catch (SQLException ex){
             AlertDialog.Builder dlg = new AlertDialog.Builder(this);
             dlg.setTitle("Error");
-            dlg.setMessage(ex.getMessage());
+            dlg.setMessage("Tente novamente mais tarde, se o erro persistir entre em contato. (" + ex.getMessage() + ")");
             dlg.setNeutralButton("Ok", null);
             dlg.show();
         }
+    }
+
+    private void loadAnimals(String filter) {
+        List<Animal> animals = repository.getAll(filter);
+
+        AnimalAdapter animalAdapter = new AnimalAdapter(animals, animal -> {
+            Intent intent = new Intent(MainActivity.this, AnimalDetails.class);
+            intent.putExtra("animal_id", animal.Id);
+            startActivity(intent);
+        });
+
+        RecyclerView recyclerViewAnimals  = findViewById(R.id.recyclerViewAnimals);
+
+        recyclerViewAnimals.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewAnimals.setAdapter(animalAdapter);
     }
 
     private void initialCustomization(){

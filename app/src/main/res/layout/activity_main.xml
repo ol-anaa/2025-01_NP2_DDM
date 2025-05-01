@@ -50,17 +50,34 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewAnimals"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/rounded_background"
-        android:layout_marginTop="10dp"
-        android:paddingTop="25dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        >
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewAnimals"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rounded_background"
+            android:paddingTop="25dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addAnimal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="40dp"
+            android:layout_marginRight="30dp"
+            android:src="@drawable/add_icon"
+            android:scaleType="center"
+            android:tint="@color/white"
+            android:backgroundTint="@color/orange_medium"
+            android:elevation="15dp"
+            />
+    </FrameLayout>
 
 </LinearLayout>

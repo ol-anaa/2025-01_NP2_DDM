@@ -9,8 +9,9 @@ public class Animal {
     public String Personality;
     public String UrlImage;
     public String Type;
+    public boolean IsAdopted;
 
-    public Animal(String name, String race, double weight, int age, String personality, String urlImage, String type){
+    public Animal(String name, String race, double weight, int age, String personality, String urlImage, String type, boolean isAdopted){
         this.Name = name;
         this.Race = race;
         this.Weight = weight;
@@ -18,5 +19,6 @@ public class Animal {
         this.Personality = personality;
         this.UrlImage = urlImage;
         this.Type = type;
+        this.IsAdopted = isAdopted;
     }
 }

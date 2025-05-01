@@ -3,5 +3,12 @@
     <style name="Base.Theme.AnimalAdoption" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorOutline">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Fab" parent="">
+        <item name="cornerSize">100%</item>
     </style>
 </resources>

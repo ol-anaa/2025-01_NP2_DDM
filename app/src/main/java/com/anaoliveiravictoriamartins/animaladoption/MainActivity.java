@@ -66,4 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().setStatusBarColor(Color.parseColor("#17706e"));
     }
+
+    //Cometário aula vic
 }

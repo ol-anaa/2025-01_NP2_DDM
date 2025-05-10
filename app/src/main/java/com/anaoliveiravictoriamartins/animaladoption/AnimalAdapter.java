@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.anaoliveiravictoriamartins.animaladoption.Domain.Entity.Animal;
-import com.anaoliveiravictoriamartins.animaladoption.Repository.AnimalsRepository;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -21,7 +20,6 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
 
     private List<Animal> animalList;
     private Consumer<Animal> onItemClick;
-
 
     public AnimalAdapter(List<Animal> animalList, Consumer<Animal> onItemClick) {
         this.animalList = animalList;
@@ -52,7 +50,6 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalView
                 onItemClick.accept(animal);
             }
         });
-
     }
 
     @Override

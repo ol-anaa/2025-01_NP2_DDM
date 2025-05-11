@@ -56,6 +56,7 @@ public class AnimalForm extends AppCompatActivity {
         */
 
         initialCustomization();
+        /*
         setupImagePicker();
 
         uploadImg.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +100,8 @@ public class AnimalForm extends AppCompatActivity {
                 finish();
             }
         });
+
+         */
     }
 
     private void setupImagePicker() {
@@ -112,7 +115,6 @@ public class AnimalForm extends AppCompatActivity {
             }
         );
     }
-
     private String saveImageToInternalStorage(){
 
         try {
@@ -138,12 +140,10 @@ public class AnimalForm extends AppCompatActivity {
             return null;
         }
     }
-
     private void initialCustomization(){
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
         getWindow().setStatusBarColor(Color.parseColor("#17706e"));
     }
-
 }

@@ -76,9 +76,9 @@ public class FundacaoPrinDatabase extends SQLiteOpenHelper {
         String pathLilica = saveBitmapToInternalStorage(lilicaImg, "lilica.png");
 
         List<Animal> defaultAnimals = Arrays.asList(
-                new Animal("Princesa", "Sem raça definida", 3, 10, "A princesa, carinhosamente conhecida como prin, é muito docil, carente, dorminhoca e sapeca", pathPrin, "Gato", false),
-                new Animal("Samy Salame", "Sem raça definida", 8, 5, "Boba, carinhosa, ciúmenta, dócil", pathSamy, "Cachorro", false),
-                new Animal("Lilica Repilica", "Sem raça definida", 9, 5, "Boba, carente, dengosa, brincalhona, desajeitada", pathLilica, "Cachorro", false)
+                new Animal("Princesa", "Sem raça definida", 3, 10, "A princesa, carinhosamente conhecida como prin, é muito docil, carente, dorminhoca e sapeca", pathPrin, "gato", false),
+                new Animal("Samy Salame", "Sem raça definida", 8, 5, "Boba, carinhosa, ciúmenta, dócil", pathSamy, "cachorro", false),
+                new Animal("Lilica Repilica", "Sem raça definida", 9, 5, "Boba, carente, dengosa, brincalhona, desajeitada", pathLilica, "cachorro", false)
         );
 
         for (Animal animal : defaultAnimals) {

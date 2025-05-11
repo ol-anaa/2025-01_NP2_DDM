@@ -6,8 +6,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,27 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         initialCustomization();
         createConnection();
+        loadDataSpinner();
         loadAnimals("Todos");
-
-        String[] tiposDeAnimais = {
-                "Todos",
-                "Cachorro",
-                "Gato",
-                "Coelho",
-                "Pássaro",
-                "Réptil",
-                "Cavalo",
-                "Outro"
-        };
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_dropdown_item_1line,
-                tiposDeAnimais
-        );
-
-        filter.setAdapter(adapter);
-        filter.setThreshold(1);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,10 +54,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        filter.setOnClickListener(new View.OnClickListener() {
+        filter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                loadAnimals(v.toString());
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedItem = (String) parent.getItemAtPosition(position);
+
+                if(!selectedItem.equals("Todos"))
+                    selectedItem = selectedItem.substring(0, selectedItem.length() - 1).toLowerCase();
+
+                loadAnimals(selectedItem);
             }
         });
     }
@@ -92,28 +80,45 @@ public class MainActivity extends AppCompatActivity {
             dlg.show();
         }
     }
-
     private void loadAnimals(String filter) {
         List<Animal> animals = repository.getAll(filter);
 
-        AnimalAdapter animalAdapter = new AnimalAdapter(animals, animal -> {
-            Intent intent = new Intent(MainActivity.this, AnimalDetails.class);
-            intent.putExtra("animal_id", animal.Id);
-            startActivity(intent);
-        });
+        TextView emptyView = findViewById(R.id.empty_view);
+        RecyclerView recyclerViewAnimals = findViewById(R.id.recyclerViewAnimals);
 
-        RecyclerView recyclerViewAnimals  = findViewById(R.id.recyclerViewAnimals);
+        if (animals.isEmpty()) {
+            recyclerViewAnimals.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+            emptyView.setText("\uD83D\uDD0D Nenhum animal encontrado.");
+        }
+        else {
+            AnimalAdapter animalAdapter = new AnimalAdapter(animals, animal -> {
+                Intent intent = new Intent(MainActivity.this, AnimalDetails.class);
+                intent.putExtra("animal_id", animal.Id);
+                startActivity(intent);
+            });
 
-        recyclerViewAnimals.setLayoutManager(new LinearLayoutManager(this));
-        recyclerViewAnimals.setAdapter(animalAdapter);
+            recyclerViewAnimals.setLayoutManager(new LinearLayoutManager(this));
+            recyclerViewAnimals.setAdapter(animalAdapter);
+        }
     }
+    private void loadDataSpinner(){
+        String[] tiposDeAnimais = { "Todos", "Cachorros", "Gatos", "Coelhos", "Pássaros", "Répteis" };
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+            this,
+            android.R.layout.simple_dropdown_item_1line,
+            tiposDeAnimais
+        );
+
+        filter.setAdapter(adapter);
+        filter.setThreshold(1);
+        filter.setText(tiposDeAnimais[0], false);
+    }
     private void initialCustomization(){
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
         getWindow().setStatusBarColor(Color.parseColor("#17706e"));
     }
-
-
 }

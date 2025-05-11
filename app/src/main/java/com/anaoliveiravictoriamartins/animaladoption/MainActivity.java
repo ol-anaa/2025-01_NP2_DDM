@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -41,6 +42,26 @@ public class MainActivity extends AppCompatActivity {
         initialCustomization();
         createConnection();
         loadAnimals("Todos");
+
+        String[] tiposDeAnimais = {
+                "Todos",
+                "Cachorro",
+                "Gato",
+                "Coelho",
+                "Pássaro",
+                "Réptil",
+                "Cavalo",
+                "Outro"
+        };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                tiposDeAnimais
+        );
+
+        filter.setAdapter(adapter);
+        filter.setThreshold(1);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,4 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
         getWindow().setStatusBarColor(Color.parseColor("#17706e"));
     }
+
+
 }

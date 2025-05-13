@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
     private void createConnection() {
 
         try {
+            this.deleteDatabase("FundacaoPrin");
             repository = AnimalsRepository.getInstance(this);
         }
         catch (SQLException ex){
@@ -92,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
             emptyView.setText("\uD83D\uDD0D Nenhum animal encontrado.");
         }
         else {
+            recyclerViewAnimals.setVisibility(View.VISIBLE);
+            emptyView.setVisibility(View.GONE);
+
             AnimalAdapter animalAdapter = new AnimalAdapter(animals, animal -> {
                 Intent intent = new Intent(MainActivity.this, AnimalDetails.class);
                 intent.putExtra("animal_id", animal.Id);

@@ -34,6 +34,7 @@
         <activity
             android:name=".AnimalForm"
             android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="adjustResize"
             />
     </application>
 

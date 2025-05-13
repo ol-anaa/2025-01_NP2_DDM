@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +18,8 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.anaoliveiravictoriamartins.animaladoption.Domain.Entity.Animal;
 import com.anaoliveiravictoriamartins.animaladoption.Repository.AnimalsRepository;
@@ -31,6 +35,7 @@ public class AnimalForm extends AppCompatActivity {
     private TextView age;
     private TextView weight;
     private TextInputLayout type;
+    private AutoCompleteTextView filter;
     private TextView personality;
     private ImageView image;
     private Uri imageUri;
@@ -43,21 +48,20 @@ public class AnimalForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.animal_form);
 
-        /*
-        name = findViewById(R.id.);
-        race = findViewById(R.id.);
-        age = findViewById(R.id.);
-        weight = findViewById(R.id.);
-        type = findViewById(R.id.);
-        personality = findViewById(R.id.);
-        image = findViewById(R.id.);
-        uploadImg = findViewById(R.id.);
-        save = findViewById(R.id.);
-        */
+        name = findViewById(R.id.form_name);
+        race = findViewById(R.id.form_race);
+        age = findViewById(R.id.form_age);
+        weight = findViewById(R.id.form_weight);
+        type = findViewById(R.id.form_type);
+        personality = findViewById(R.id.form_personality);
+        image = findViewById(R.id.form_img);
+        uploadImg = findViewById(R.id.form_upload);
+        save = findViewById(R.id.form_save);
+        filter = findViewById(R.id.form_filter);
 
         initialCustomization();
-        /*
         setupImagePicker();
+        loadDataSpinner();
 
         uploadImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +76,6 @@ public class AnimalForm extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //manda mensagem de erro
                 if (imageUri == null)
                     return;
 
@@ -82,13 +85,13 @@ public class AnimalForm extends AppCompatActivity {
                     return;
 
                 Animal animal = new Animal(
-                     name.toString(),
-                     race.toString(),
-                     Double.parseDouble(weight.toString()),
-                     Integer.parseInt(age.toString()),
-                     personality.toString(),
+                     name.getText().toString(),
+                     race.getText().toString(),
+                     Double.parseDouble(weight.getText().toString()),
+                     Integer.parseInt(age.getText().toString()),
+                     personality.getText().toString(),
                      imagePath,
-                     type.toString().toLowerCase(),
+                     filter.getText().toString().toLowerCase(),
                      false
                 );
 
@@ -100,8 +103,6 @@ public class AnimalForm extends AppCompatActivity {
                 finish();
             }
         });
-
-         */
     }
 
     private void setupImagePicker() {
@@ -141,9 +142,27 @@ public class AnimalForm extends AppCompatActivity {
         }
     }
     private void initialCustomization(){
-        if (getSupportActionBar() != null)
-            getSupportActionBar().hide();
-
         getWindow().setStatusBarColor(Color.parseColor("#17706e"));
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+    }
+    private void loadDataSpinner(){
+        String[] tiposDeAnimais = { "Cachorro", "Gato", "Coelho", "Pássaro", "Répteis" };
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_dropdown_item_1line,
+                tiposDeAnimais
+        );
+
+        filter.setAdapter(adapter);
+        filter.setThreshold(1);
+        filter.setText(tiposDeAnimais[0], false);
     }
 }

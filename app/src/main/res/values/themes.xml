@@ -12,4 +12,7 @@
     <style name="ShapeAppearanceOverlay.Fab" parent="">
         <item name="cornerSize">100%</item>
     </style>
+    <style name="EditTextCursorStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textCursorDrawable">@drawable/cursor_color</item>
+    </style>
 </resources>
